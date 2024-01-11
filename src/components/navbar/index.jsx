@@ -86,8 +86,8 @@ const Navbar = () => {
                 <div className='flex gap-3 ml-4 py-3 '>
 
                 {
-                    miniNAvbar.map((item)=>(
-                        <p className='text-[15px] hover:text-[#00a49f] cursor-pointer'>{item}</p>
+                    miniNAvbar.map((item, i)=>(
+                        <p key={i} className='text-[15px] hover:text-[#00a49f] cursor-pointer'>{item}</p>
                         ))
                     }
                     </div>
