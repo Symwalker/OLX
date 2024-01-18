@@ -9,8 +9,15 @@ const Signup = () => {
   const [email, setEmail] = useState()
   const [age, setAge] = useState()
   const [password, setPassword] = useState()
-  const handleSubmit = () => {
-    register({fullName, email, age, password})
+  const handleSubmit = async () => {
+    const log = await register({ fullName, email, age, password })
+    if (log) {
+      setTimeout(() => {
+
+        navigate('/login')
+      }, 1000)
+    }
+    // navigate('/login')
   }
   return (
     <div className='relative'>
@@ -18,15 +25,15 @@ const Signup = () => {
         <img src={bg1} className='h-full w-full' />
       </div>
       <div className='relative top-[200px] h-[50vh] max-w-[1000px] mx-auto '>
-      <Toaster
-  position="top-center"
-  reverseOrder={false}
-/>
+        <Toaster
+          position="top-center"           
+          reverseOrder={false}
+        />
         <div className='flex gap-3 h-[100%]'>
           <div className='flex basis-1/2 flex-col justify-between  '>
             <div>
               <h1 className='text-[60px] font-bold leading-[65px] text-white'>Create <br />New Account</h1>
-              <p className='text-[27px] font-medium text-white mt-5'>Already Register? <span className='underline cursor-pointer under pt-2' onClick={() => navigate('/')}>Login</span></p>
+              <p className='text-[27px] font-medium text-white mt-5'>Already Register? <span className='underline cursor-pointer under pt-2' onClick={() => navigate('/login')}>Login</span></p>
             </div>
             <div className='mt-3 flex flex-col gap-10'>
               <div className='border-2 w-1/6 border-white rounded-full' />
@@ -39,7 +46,7 @@ const Signup = () => {
           </div>
           <div className='basis-1/2  h-full bg-[#ffffff47] rounded-[36px]'>
             <div className='flex flex-col pb-7 gap-2 justify-between h-full w-[80%] mx-auto'>
-              <h2 className='text-[45px] text-white font-bold text-center '>Login</h2>
+              <h2 className='text-[45px] text-white font-bold text-center '>Register</h2>
               <div className='flex flex-col gap-1'>
                 <label className='text-white px-4 font-bold'>NAME</label>
                 <input onChange={(e) => setFullName(e.target.value)} type="text" on className='px-5 bg-[#ffffff63] py-2 outline-none text-white placeholder:text-white text-[20px] rounded-full' placeholder='Enter Your Name' />

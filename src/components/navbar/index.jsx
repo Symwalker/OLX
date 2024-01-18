@@ -10,6 +10,7 @@ import { IoChevronDown } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 
 import "./index.css"
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 const Navbar = () => {
     const miniNAvbar = ["Mobile Phones", "Cars", "Motorcycles", "Houses", "Video-Audios", "Tablets", "Land Plots"]
     return (
@@ -19,7 +20,8 @@ const Navbar = () => {
                     {/* upper navbar start */}
                     <div className='flex gap-10 py-[10px]'>
                         <div>
-                            <img src={olxBlue} width={"32"} height={20} alt="" />
+                            <Link to={'/'}>
+                                <img src={olxBlue} width={"32"} height={20} alt="" /></Link>
                         </div>
                         <div className='flex items-center gap-3 hover:text-[#3A77FF] cursor-pointer'>
                             <div className='gradient rounded-full'>
@@ -43,7 +45,7 @@ const Navbar = () => {
                     {/* lower navbar start*/}
                     <div className='py-[10px] grid grid-cols-12 justify-center gap-7 items-center'>
                         <div className='col-span-1'>
-                            <img src={olxblck} width={"61"} height={20} alt="" />
+                            <Link to={'/'}> <img src={olxblck} width={"61"} height={20} alt="" /></Link>
                         </div>
                         <div className='col-span-2 flex items-center bg-white py-[10px] rounded-[4px]  border-solid border-black border-[2px]'>
                             <div className=' ml-[0.8rem] '>
@@ -68,29 +70,31 @@ const Navbar = () => {
                             </button>
 
                         </div>
-                        <p className='col-span-1 font-bold  pb-2 text-center login'>LOGIN</p>
+                        <Link to={"/login"} className='col-span-1 font-bold  pb-2 text-center login'>LOGIN</Link>
                         <div className='col-span-1 '>
-                            <div className='relative '>
-                                <img src={sellBtn} className='mx-auto' />
-                                <div className='absolute right-0 left-0 top-0 bottom-0 flex justify-center items-center gap-1 text-black'>
-                                    <TiPlus size={20} />
-                                    <p className='font-bold'>SELL</p>
+                            <Link to={'/sellItem'}>
+                                <div className='relative '>
+                                    <img src={sellBtn} className='mx-auto' />
+                                    <div className='absolute right-0 left-0 top-0 bottom-0 flex justify-center items-center gap-1 text-black'>
+                                        <TiPlus size={20} />
+                                        <p className='font-bold'>SELL</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
             <div className='max-w-[1400px] mx-auto flex items-center'>
-                <h3 className='font-semibold flex items-center gap-1 text- '>All Categories<span className='font-light'><IoChevronDown size={30}/></span></h3>
+                <h3 className='font-semibold flex items-center gap-1 text- '>All Categories<span className='font-light'><IoChevronDown size={30} /></span></h3>
                 <div className='flex gap-3 ml-4 py-3 '>
 
-                {
-                    miniNAvbar.map((item, i)=>(
-                        <p key={i} className='text-[15px] hover:text-[#00a49f] cursor-pointer'>{item}</p>
+                    {
+                        miniNAvbar.map((item, i) => (
+                            <p key={i} className='text-[15px] hover:text-[#00a49f] cursor-pointer'>{item}</p>
                         ))
                     }
-                    </div>
+                </div>
             </div>
         </div>
 

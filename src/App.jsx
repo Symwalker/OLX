@@ -3,11 +3,13 @@ import Navbar from './components/navbar'
 import Banner from './components/Banner'
 import Categories from './components/CategoriesSection'
 import Home from './views/Home'
-import { useRoutes } from 'react-router-dom'
+import { useParams, useRoutes } from 'react-router-dom'
 import Layout from './views/Layout'
 import ProductDetail from './views/productDetails'
 import Login from './views/login'
 import Signup from './views/singup'
+import Sellitem from './views/sellItem'
+import Footer from './components/footer'
 
 const App = () => {
   let routes = [
@@ -27,16 +29,28 @@ const App = () => {
       element: <Login />,
     },
     {
-      path: "/signup",
+      path: "/register",
       element: <Signup />,
+    },
+    {
+      path: "/sellItem",
+      element: <Sellitem  />,
     }
   ];
   let element = useRoutes(routes);
+  const pathname = location.pathname
+  // const pathname = useParams()
+  console.log(pathname);
   return (
     <div >
-      <Navbar />
+      {
+        pathname === "/login" || pathname === "/register" ? null : <Navbar />
+      }
 
       {element}
+      {
+        pathname === "/login" || pathname === "/register" ? null : <Footer />
+      }
     </div>
   )
 }

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Card = ({ brand, price, category, id, desc, images, rating, title, thumbnail }) => {
 
   const navigate = useNavigate()
-  console.log(images);
+  // console.log(images);
   return (
     <div key={id} className='w-[332px] h-[390px] border-gray-300 border-[3px] rounded-[4px]' onClick={()=>navigate(`/product/${id}`)}>
       <img src={thumbnail} className="h-[50%] w-full rounded-tr-[3px] rounded-tl-[3px]  object-cover object-top" alt="" />
