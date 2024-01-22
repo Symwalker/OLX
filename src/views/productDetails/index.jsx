@@ -83,7 +83,7 @@ const ProductDetail = () => {
                         <div className='flex flex-col justify-between '>
                             <p className='font-bold'>Shayan</p>
                             <p>Member since Mar 2023</p>
-                            <p className='font-bold text-[20px]'>See Profile ></p>
+                            <p className='font-bold text-[20px]'>See Profile  </p>
                         </div>
                     </div>
                     <div className='w-full p-[10px]'>

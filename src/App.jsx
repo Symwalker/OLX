@@ -8,8 +8,8 @@ import Layout from './views/Layout'
 import ProductDetail from './views/productDetails'
 import Login from './views/login'
 import Signup from './views/singup'
-import Sellitem from './views/sellItem'
 import Footer from './components/footer'
+import Sellitem from './views/sellItem'
 
 const App = () => {
   let routes = [
@@ -34,7 +34,7 @@ const App = () => {
     },
     {
       path: "/sellItem",
-      element: <Sellitem  />,
+      element: <Sellitem/>,
     }
   ];
   let element = useRoutes(routes);

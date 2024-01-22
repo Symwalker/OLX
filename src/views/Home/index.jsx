@@ -5,13 +5,14 @@ import Card from '../../components/Card'
 
 const Home = () => {
     const [products, setProducts] = useState([])
+    const 
     useEffect(() => {
-        fetch('https://dummyjson.com/products')
-            .then((res) => res.json())
-            .then((res) => {
-                console.log(res.products);
-                setProducts(res.products)
-            })
+        // fetch('https://dummyjson.com/products')
+        //     .then((res) => res.json())
+        //     .then((res) => {
+        //         console.log(res.products);
+        //         setProducts(res.products)
+        //     })
     }, [])
     return (
         <div>

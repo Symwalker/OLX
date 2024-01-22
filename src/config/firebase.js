@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { collection, addDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -22,6 +23,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 export async function register(userInfo) {
   const { email, password, fullName, age } = userInfo;
@@ -53,19 +55,26 @@ export async function login(userInfo) {
 }
 
 export async function addItem(productInfo) {
-  const { brand, title, description, category, price } = productInfo;
-  console.log(brand, title, description, category, price );
+  const { brand, title, description, category, price, image } = productInfo;
+  console.log(brand, title, description, category, price, image);
+  
   try {
+    const storageRef = ref(storage, `ads/${image.name}`);
+    await uploadBytes(storageRef, image);
+    const url = await getDownloadURL(storageRef);
     await addDoc(collection(db, "products"), {
       brand,
       title,
       description,
       category,
       price,
+      imageURL: url,
     });
     toast.success("Product successfully added");
+    return true
     // console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     toast.success(e.message);
+    return true
   }
 }

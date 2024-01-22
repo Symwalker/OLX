@@ -47,7 +47,7 @@ const Navbar = () => {
                         <div className='col-span-1'>
                             <Link to={'/'}> <img src={olxblck} width={"61"} height={20} alt="" /></Link>
                         </div>
-                        <div className='col-span-2 flex items-center bg-white py-[10px] rounded-[4px]  border-solid border-black border-[2px]'>
+                        <div className='col-span-3 flex items-center bg-white py-[14px] rounded-[4px]  border-solid border-black border-[2px]'>
                             <div className=' ml-[0.8rem] '>
                                 <IoIosSearch size={20} />
                             </div>
@@ -61,7 +61,7 @@ const Navbar = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className='relative flex col-span-7 bg-white  rounded-[4px]  border-solid border-black border-[2px]'>
+                        <div className='relative flex col-span-6 bg-white  rounded-[4px]  border-solid border-black border-[2px]'>
 
                             <input type="text" className='px-[12px] placeholder:text-gray-600 w-full border-none py-3' placeholder='Find Cars, Mobile Phones and more...' />
                             <button className='absolute flex items-center px-2 cur right-0 top-0 bottom-0 bg-[#002F34]'>
