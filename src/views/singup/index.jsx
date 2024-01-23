@@ -13,16 +13,29 @@ const Signup = () => {
   const [img, setImage] = useState()
   console.log(img);
   const handleSubmit = async () => {
+
     const image = img
     const log = await register({ fullName, email, age, password,image })
     if (log) {
       setTimeout(() => {
 
         navigate('/login')
-      }, 1000)
+      }, 3000)
     }
     // navigate('/login')
   }
+  const [previewImage, setPreviewImage] = useState(null);
+    const handleImageChange = (e) => {
+      setImage(e.target.files[0])
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setPreviewImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
   return (
     <div className='relative'>
       <div className='absolute h-screen w-screen'>
@@ -72,13 +85,10 @@ const Signup = () => {
               </div>
               <div className="mb-5 flex items-center gap-3 ">
                 <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-[#0067ff] flex items-center justify-center ">
-                  <img src={avatar} className="w-full rounded-full" alt="" />
+                  <img src={previewImage?previewImage:avatar} className="w-full rounded-full" alt="" />
                 </figure>
                 <div className="relative w-[130px] h-[50px]  ">
-                  <input type="file" onChange={(e) => {
-                    setImage(e.target.files[0])
-                    
-                  }} id="customFile" accept=".jpg, .png" className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer " />
+                  <input type="file" onChange={handleImageChange} id="customFile" accept=".jpg, .png" className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer " />
                   <label htmlFor="customFile" className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#fff] text-black font-semibold rounded-lg truncate cursor-pointer ">
                     upload Photo
                   </label>

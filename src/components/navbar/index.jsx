@@ -12,16 +12,17 @@ import { IoIosSearch } from "react-icons/io";
 import "./index.css"
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { auth, getUser } from '../../config/firebase';
 const Navbar = () => {
     const miniNAvbar = ["Mobile Phones", "Cars", "Motorcycles", "Houses", "Video-Audios", "Tablets", "Land Plots"]
     const [userr, setUser] = useState()
+    console.log(userr);
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-          setUser(user)
+        onAuthStateChanged(auth, async (user) => {
+            const data = await getUser(user.uid)
+            setUser(data)
         })
-      }, [])
-      console.log(userr);
+    }, [])
     return (
         <div className='border-b  shadow-sm'>
             <div className='bg-[#F7F8F8]'>
@@ -81,13 +82,13 @@ const Navbar = () => {
                         </div>
                         <div className='col-span-1 flex justify-center'>
 
-                        {
-                            
-                            userr ?  <Link to={"/user/profile/me"}>
-                            <img className='w-[40px] rounded-full cursor-pointer' src={shayan} alt="" /></Link>:
-                            <Link to={"/login"} className=' font-bold  pb-2 text-center login'>LOGIN</Link>
-                            
-                        }
+                            {
+
+                                userr ? <Link to={"/user/profile/me"}>
+                                    <img className='w-[40px] rounded-full cursor-pointer' src={userr.profilePic} alt="" /></Link> :
+                                    <Link to={"/login"} className=' font-bold  pb-2 text-center login'>LOGIN</Link>
+
+                            }
                         </div>
                         <div className='col-span-1 '>
                             <Link to={'/sellItem'}>

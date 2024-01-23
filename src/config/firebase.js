@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, addDoc, getDocs, getDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   getAuth,
@@ -26,24 +26,51 @@ export const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-export async function register(userInfo) {
-  const { email, password, fullName, age } = userInfo;
-  try {
-    console.log(email, age, fullName);
-    const authResult = await createUserWithEmailAndPassword(auth, email, password)
-    console.log(authResult.uid);
-    // const user = authResult.user;
+// export async function register(userInfo) {
+//   try {
+//     const { email, password, fullName, age } = userInfo;
+//     console.log(email, age, fullName);
+//     const user = await createUserWithEmailAndPassword(
+//       auth,
+//       email,
+//       password
+//     );
+   
 
-    // await addDoc(collection(db, "users"), {
-    //   email,
-    //   fullName,
-    //   age,
-    // });
+//     await addDoc(collection(db, "users"), {
+//       email,
+//       fullName,
+//       age,
+//       user
+//     });
+//     toast.success("User Created");
+//     return true;
+//   } catch (error) {
+//     toast.error(error.message);
+//   }
+// }
+
+export async function register(userInfo){
+  try{
+    const { email, password, fullName, age, image} = userInfo
+    const authResult =  await createUserWithEmailAndPassword(auth, email, password)
+    const user = authResult.user;
+    const storageRef = ref(storage, `users/${image.name}`);
+    await uploadBytes(storageRef, image);
+    const url = await getDownloadURL(storageRef);
+    await setDoc(doc(db, "users", user.uid), {
+      fullName,
+      profilePic: url,
+      email,
+      age
+    });
     toast.success("User Created");
-    return true;
-  } catch (error) {
-    toast.error(error.message);
-  }
+    // alert("User Registered")
+    //  uid = user.uid
+  }catch(e){
+    const errorMessage = e.message;
+    alert(errorMessage)
+  }
 }
 
 export async function login(userInfo) {
@@ -52,7 +79,6 @@ export async function login(userInfo) {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     toast.success("successfully login");
-    
   } catch (error) {
     toast.error(error.message);
   }
@@ -60,7 +86,7 @@ export async function login(userInfo) {
 
 export async function addItem(productInfo) {
   const { brand, title, description, category, price, image } = productInfo;
-  console.log(brand, title, description, category, price, image);
+  // console.log(brand, title, description, category, price, image);
 
   try {
     const storageRef = ref(storage, `ads/${image.name}`);
@@ -87,7 +113,7 @@ export async function getItems() {
   const ads = [];
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
+    // console.log(doc.id, " => ", doc.data());
     const data = doc.data();
     data.id = doc.id;
     ads.push(data);
@@ -107,27 +133,27 @@ export async function getSingleItem(id) {
 }
 
 export async function logout() {
-  try{
+  try {
     await signOut(auth);
-    toast.success("you loggedOut")
-    return true
-  }catch(e){
-    toast.error("something went wrong")
-
+    toast.success("you loggedOut");
+    return true;
+  } catch (e) {
+    toast.error("something went wrong");
   }
 }
 
-// export async function getUser() {
-//   const docRef = doc(db, 'products', );
-//   try {
-//     await updateDoc(frankDocRef, {
-//       "age": 13,
-//       "favorites.color": "Red"
-//   });
-//   } catch (error) {
-    
-//   }
-// }
+export async function getUser(id) {
+  const docRef = doc(db, "users", id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    // console.log("Document data:", docSnap.data());
+    return docSnap.data();
+  } else {
+    // docSnap.data() will be undefined in this case
+    // console.log("No such document!");
+  }
+  
+}
 
 // export async function updataUser(id, data) {
 //   const docRef = doc(db, 'products', );
@@ -137,6 +163,6 @@ export async function logout() {
 //       "favorites.color": "Red"
 //   });
 //   } catch (error) {
-    
+
 //   }
 // }
