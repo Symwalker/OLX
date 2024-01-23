@@ -3,14 +3,18 @@ import bg1 from "../../assets/bg1.png"
 import { useNavigate } from 'react-router-dom'
 import { register } from '../../config/firebase'
 import { Toaster } from 'react-hot-toast'
+import avatar from "../../assets/avatar.jpg"
 const Signup = () => {
   const navigate = useNavigate()
   const [fullName, setFullName] = useState()
   const [email, setEmail] = useState()
   const [age, setAge] = useState()
   const [password, setPassword] = useState()
+  const [img, setImage] = useState()
+  console.log(img);
   const handleSubmit = async () => {
-    const log = await register({ fullName, email, age, password })
+    const image = img
+    const log = await register({ fullName, email, age, password,image })
     if (log) {
       setTimeout(() => {
 
@@ -26,7 +30,7 @@ const Signup = () => {
       </div>
       <div className='relative top-[200px] h-[50vh] max-w-[1000px] mx-auto '>
         <Toaster
-          position="top-center"           
+          position="top-center"
           reverseOrder={false}
         />
         <div className='flex gap-3 h-[100%]'>
@@ -44,7 +48,7 @@ const Signup = () => {
               <button className='bg-[#EF6B48] text-[22px] rounded-full text-white px-8 py-2'>Learn More</button>
             </div>
           </div>
-          <div className='basis-1/2  h-full bg-[#ffffff47] rounded-[36px]'>
+          <div className='basis-1/2  h-full  rounded-[36px]'>
             <div className='flex flex-col pb-7 gap-2 justify-between h-full w-[80%] mx-auto'>
               <h2 className='text-[45px] text-white font-bold text-center '>Register</h2>
               <div className='flex flex-col gap-1'>
@@ -65,6 +69,21 @@ const Signup = () => {
               <div className='flex flex-col gap-1'>
                 <label className='text-white px-4 font-bold'>PASSWORD</label>
                 <input onChange={(e) => setPassword(e.target.value)} type="password" className='px-5 bg-[#ffffff63] outline-none text-white py-2 placeholder:text-white text-[20px] rounded-full' placeholder='Enter Your Password ' />
+              </div>
+              <div className="mb-5 flex items-center gap-3 ">
+                <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-[#0067ff] flex items-center justify-center ">
+                  <img src={avatar} className="w-full rounded-full" alt="" />
+                </figure>
+                <div className="relative w-[130px] h-[50px]  ">
+                  <input type="file" onChange={(e) => {
+                    setImage(e.target.files[0])
+                    
+                  }} id="customFile" accept=".jpg, .png" className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer " />
+                  <label htmlFor="customFile" className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#fff] text-black font-semibold rounded-lg truncate cursor-pointer ">
+                    upload Photo
+                  </label>
+                </div>
+
               </div>
               <button onClick={handleSubmit} className='bg-[#EF6B48] mt-2 w-1/3 mx-auto text-[18px] rounded-full text-white  py-2'>Sign Up</button>
 

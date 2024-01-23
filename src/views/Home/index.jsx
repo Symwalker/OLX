@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react'
 import Banner from '../../components/Banner'
 import Categories from '../../components/CategoriesSection'
 import Card from '../../components/Card'
+import { getItems } from '../../config/firebase'
 
 const Home = () => {
     const [products, setProducts] = useState([])
-    const 
+    const getAllProducts =async ()=>{
+      const ads =  await getItems()
+      setProducts(ads)
+    }
     useEffect(() => {
-        // fetch('https://dummyjson.com/products')
-        //     .then((res) => res.json())
-        //     .then((res) => {
-        //         console.log(res.products);
-        //         setProducts(res.products)
-        //     })
+        getAllProducts()
     }, [])
     return (
         <div>
@@ -23,7 +22,7 @@ const Home = () => {
 
                     {
                         products.map((product) => (
-                            <Card brand={product.brand} category={product.category} desc={product.description} id={product.id} images={product.images} price={product.price} rating={product.rating} thumbnail={product.thumbnail} title={product.title} />
+                            <Card brand={product.brand} category={product.category} thumbnail={product.imageURL} desc={product.description} id={product.id} images={product.images} price={product.price} rating={product.rating}  title={product.title} />
 
                         ))
                     }

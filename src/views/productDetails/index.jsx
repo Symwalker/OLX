@@ -3,18 +3,24 @@ import { useParams } from 'react-router-dom'
 import shayan from "../../assets/shayan.JPG"
 import { FiPhone } from "react-icons/fi";
 import { IoChatbubblesOutline } from "react-icons/io5";
+import { getSingleItem } from '../../config/firebase';
 
 const ProductDetail = () => {
     const [product, setProduct] = useState()
     console.log(product);
     const { id } = useParams()
     console.log(id);
+    const getAd =async ()=>{
+        const ad = await getSingleItem(id)
+        setProduct(ad)
+    }
     useEffect(() => {
-        fetch(`https://dummyjson.com/products/${id}`)
-            .then((res) => res.json())
-            .then((res) => {
-                setProduct(res)
-            })
+        getAd()
+        // fetch(`https://dummyjson.com/products/${id}`)
+        //     .then((res) => res.json())
+        //     .then((res) => {
+        //         setProduct(res)
+        //     })
     }, [])
     if (!product) {
         return <h1>Loading</h1>
@@ -46,7 +52,11 @@ const ProductDetail = () => {
                                 aria-label="Slide 3"
                             />
                         </div>
-                        <div className="carousel-inner">
+                        <div>
+                        <img src={product.imageUrl} className="d-block w-[550px] h-[550px] ms-auto me-auto" alt="..." />
+
+                        </div>
+                        {/* <div className="carousel-inner">
                             <div className="carousel-item active ">
                                 <img src={product.images[0]} className="d-block w-[550px] h-[550px] ms-auto me-auto" alt="..." />
                             </div>
@@ -56,7 +66,7 @@ const ProductDetail = () => {
                             <div className="carousel-item">
                                 <img src={product.images[3]} className="d-block w-[550px] h-[550px] ms-auto me-auto" alt="..." />
                             </div>
-                        </div>
+                        </div> */}
                         <button
                             className="carousel-control-prev"
                             type="button"

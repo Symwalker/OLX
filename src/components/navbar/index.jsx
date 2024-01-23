@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import olxBlue from "../../assets/olx-blue.png"
 import olxblck from "../../assets/olx-black.png"
 import sellBtn from "../../assets/sellBtn.png"
@@ -6,13 +6,22 @@ import { IoCarSportOutline } from "react-icons/io5";
 import { BsBuildings } from "react-icons/bs";
 import { TiPlus } from "react-icons/ti";
 import { IoChevronDown } from "react-icons/io5";
-
+import shayan from "../../assets/shayan.jpg"
 import { IoIosSearch } from "react-icons/io";
 
 import "./index.css"
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../config/firebase';
 const Navbar = () => {
     const miniNAvbar = ["Mobile Phones", "Cars", "Motorcycles", "Houses", "Video-Audios", "Tablets", "Land Plots"]
+    const [userr, setUser] = useState()
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+          setUser(user)
+        })
+      }, [])
+      console.log(userr);
     return (
         <div className='border-b  shadow-sm'>
             <div className='bg-[#F7F8F8]'>
@@ -70,7 +79,16 @@ const Navbar = () => {
                             </button>
 
                         </div>
-                        <Link to={"/login"} className='col-span-1 font-bold  pb-2 text-center login'>LOGIN</Link>
+                        <div className='col-span-1 flex justify-center'>
+
+                        {
+                            
+                            userr ?  <Link to={"/user/profile/me"}>
+                            <img className='w-[40px] rounded-full cursor-pointer' src={shayan} alt="" /></Link>:
+                            <Link to={"/login"} className=' font-bold  pb-2 text-center login'>LOGIN</Link>
+                            
+                        }
+                        </div>
                         <div className='col-span-1 '>
                             <Link to={'/sellItem'}>
                                 <div className='relative '>

@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, getDoc, doc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   getAuth,
@@ -9,6 +9,7 @@ import {
 import { getFirestore } from "firebase/firestore";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { data } from "autoprefixer";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAJIvWO4XpLQBF3_s5gOiXIyRv7Zj-_jZs",
@@ -21,7 +22,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+export const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
@@ -29,12 +30,15 @@ export async function register(userInfo) {
   const { email, password, fullName, age } = userInfo;
   try {
     console.log(email, age, fullName);
-    await createUserWithEmailAndPassword(auth, email, password);
-    await addDoc(collection(db, "users"), {
-      email,
-      fullName,
-      age,
-    });
+    const authResult = await createUserWithEmailAndPassword(auth, email, password)
+    console.log(authResult.uid);
+    // const user = authResult.user;
+
+    // await addDoc(collection(db, "users"), {
+    //   email,
+    //   fullName,
+    //   age,
+    // });
     toast.success("User Created");
     return true;
   } catch (error) {
@@ -48,7 +52,7 @@ export async function login(userInfo) {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     toast.success("successfully login");
-    return true;
+    
   } catch (error) {
     toast.error(error.message);
   }
@@ -57,7 +61,7 @@ export async function login(userInfo) {
 export async function addItem(productInfo) {
   const { brand, title, description, category, price, image } = productInfo;
   console.log(brand, title, description, category, price, image);
-  
+
   try {
     const storageRef = ref(storage, `ads/${image.name}`);
     await uploadBytes(storageRef, image);
@@ -71,10 +75,68 @@ export async function addItem(productInfo) {
       imageURL: url,
     });
     toast.success("Product successfully added");
-    return true
+    return true;
     // console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     toast.success(e.message);
-    return true
+    return true;
   }
 }
+export async function getItems() {
+  const querySnapshot = await getDocs(collection(db, "products"));
+  const ads = [];
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+    const data = doc.data();
+    data.id = doc.id;
+    ads.push(data);
+  });
+  return ads;
+}
+export async function getSingleItem(id) {
+  const docRef = doc(db, "products", id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    // console.log("Document data:", docSnap.data());
+    return docSnap.data();
+  } else {
+    // docSnap.data() will be undefined in this case
+    // console.log("No such document!");
+  }
+}
+
+export async function logout() {
+  try{
+    await signOut(auth);
+    toast.success("you loggedOut")
+    return true
+  }catch(e){
+    toast.error("something went wrong")
+
+  }
+}
+
+// export async function getUser() {
+//   const docRef = doc(db, 'products', );
+//   try {
+//     await updateDoc(frankDocRef, {
+//       "age": 13,
+//       "favorites.color": "Red"
+//   });
+//   } catch (error) {
+    
+//   }
+// }
+
+// export async function updataUser(id, data) {
+//   const docRef = doc(db, 'products', );
+//   try {
+//     await updateDoc(frankDocRef, {
+//       "age": 13,
+//       "favorites.color": "Red"
+//   });
+//   } catch (error) {
+    
+//   }
+// }

@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './components/navbar'
 import Banner from './components/Banner'
 import Categories from './components/CategoriesSection'
 import Home from './views/Home'
-import { useParams, useRoutes } from 'react-router-dom'
+import { useNavigate, useParams, useRoutes } from 'react-router-dom'
 import Layout from './views/Layout'
 import ProductDetail from './views/productDetails'
 import Login from './views/login'
 import Signup from './views/singup'
 import Footer from './components/footer'
 import Sellitem from './views/sellItem'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from './config/firebase'
+import User from './user'
 
 const App = () => {
   let routes = [
@@ -18,12 +21,21 @@ const App = () => {
       element: <Layout />,
       children: [
         { index: true, element: <Home /> },
+        {
+          path: "/product/:id",
+          element: <ProductDetail />,
+        },
+        {
+          path: "/user/profile/me",
+          element: <User />,
+        },
+        {
+          path: "/sellItem",
+          element: <Sellitem />,
+        }
       ]
     },
-    {
-      path: "/product/:id",
-      element: <ProductDetail />,
-    },
+
     {
       path: "/login",
       element: <Login />,
@@ -32,25 +44,35 @@ const App = () => {
       path: "/register",
       element: <Signup />,
     },
-    {
-      path: "/sellItem",
-      element: <Sellitem/>,
-    }
+
   ];
   let element = useRoutes(routes);
-  const pathname = location.pathname
-  // const pathname = useParams()
+  const { pathname } = window.location
+  const [userr, setUser ]= useState()
   console.log(pathname);
-  return (
-    <div >
-      {
-        pathname === "/login" || pathname === "/register" ? null : <Navbar />
-      }
+  const navigate = useNavigate()
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user) => {
+      setUser(user)
+    })
+  },[])
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        if (pathname === "/login" || pathname === "/register") {
+          navigate('/')
+        }
+      } else {
+        if (pathname === "/sellItem") {
+          navigate('/login')
 
-      {element}
-      {
-        pathname === "/login" || pathname === "/register" ? null : <Footer />
+        }
       }
+    })
+  }, [pathname,userr])
+  return (
+    <div>
+      {element}
     </div>
   )
 }

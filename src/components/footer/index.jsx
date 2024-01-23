@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <div className='bg-[#ebeeef]'>
+        <div className='bg-[#ebeeef] fixed bottom-0 left-0 right-0'>
 
             <footer className="text-gray-600 max-w-[1400px] mx-auto body-font mt-5" >
                 <div className="mx-auto flex md:items-center   lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col" style={{  padding: "16px 0px 64px" }}>
