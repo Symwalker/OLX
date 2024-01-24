@@ -19,8 +19,11 @@ const Navbar = () => {
     console.log(userr);
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
-            const data = await getUser(user.uid)
-            setUser(data)
+            if(user){
+                const data = await getUser(user.uid)
+
+                setUser(data)
+            }
         })
     }, [])
     return (
@@ -84,8 +87,11 @@ const Navbar = () => {
 
                             {
 
-                                userr ? <Link to={"/user/profile/me"}>
-                                    <img className='w-[40px] rounded-full cursor-pointer' src={userr.profilePic} alt="" /></Link> :
+                                userr ? 
+                                <h2>{userr.fullName}</h2>
+                                // <Link to={"/user/profile/me"}>
+                                //     <img className='w-[40px] rounded-full cursor-pointer' src={userr.profilePic} alt="" /></Link>
+                                     :
                                     <Link to={"/login"} className=' font-bold  pb-2 text-center login'>LOGIN</Link>
 
                             }

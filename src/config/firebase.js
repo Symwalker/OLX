@@ -55,6 +55,7 @@ export async function register(userInfo){
     const { email, password, fullName, age, image} = userInfo
     const authResult =  await createUserWithEmailAndPassword(auth, email, password)
     const user = authResult.user;
+    console.log(user);
     const storageRef = ref(storage, `users/${image.name}`);
     await uploadBytes(storageRef, image);
     const url = await getDownloadURL(storageRef);
@@ -65,11 +66,10 @@ export async function register(userInfo){
       age
     });
     toast.success("User Created");
-    // alert("User Registered")
-    //  uid = user.uid
+ 
   }catch(e){
     const errorMessage = e.message;
-    alert(errorMessage)
+    toast.error(e.message)
   }
 }
 
@@ -143,6 +143,7 @@ export async function logout() {
 }
 
 export async function getUser(id) {
+  console.log(id);
   const docRef = doc(db, "users", id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {

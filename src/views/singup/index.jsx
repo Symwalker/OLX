@@ -83,7 +83,7 @@ const Signup = () => {
                 <label className='text-white px-4 font-bold'>PASSWORD</label>
                 <input onChange={(e) => setPassword(e.target.value)} type="password" className='px-5 bg-[#ffffff63] outline-none text-white py-2 placeholder:text-white text-[20px] rounded-full' placeholder='Enter Your Password ' />
               </div>
-              <div className="mb-5 flex items-center gap-3 ">
+              {/* <div className="mb-5 flex items-center gap-3 ">
                 <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-[#0067ff] flex items-center justify-center ">
                   <img src={previewImage?previewImage:avatar} className="w-full rounded-full" alt="" />
                 </figure>
@@ -94,7 +94,7 @@ const Signup = () => {
                   </label>
                 </div>
 
-              </div>
+              </div> */}
               <button onClick={handleSubmit} className='bg-[#EF6B48] mt-2 w-1/3 mx-auto text-[18px] rounded-full text-white  py-2'>Sign Up</button>
 
             </div>

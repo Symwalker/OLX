@@ -5,7 +5,7 @@ import Footer from '../../components/footer'
 const Layout = () => {
   return (
     <div className='relative'>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className='pb-[600px]'>
         <Outlet />
       </div>
