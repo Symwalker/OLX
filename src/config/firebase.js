@@ -1,5 +1,13 @@
 import { initializeApp } from "firebase/app";
-import { collection, addDoc, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   getAuth,
@@ -35,7 +43,6 @@ const storage = getStorage(app);
 //       email,
 //       password
 //     );
-   
 
 //     await addDoc(collection(db, "users"), {
 //       email,
@@ -50,27 +57,31 @@ const storage = getStorage(app);
 //   }
 // }
 
-export async function register(userInfo){
-  try{
-    const { email, password, fullName, age, image} = userInfo
-    const authResult =  await createUserWithEmailAndPassword(auth, email, password)
+export async function register(userInfo) {
+  try {
+    const { email, password, fullName, age, img } = userInfo;
+    console.log(img, "firebase wala");
+    const authResult = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     const user = authResult.user;
     console.log(user);
-    const storageRef = ref(storage, `users/${image.name}`);
-    await uploadBytes(storageRef, image);
+    const storageRef = ref(storage, `users/${img.name}`);
+    await uploadBytes(storageRef, img);
     const url = await getDownloadURL(storageRef);
     await setDoc(doc(db, "users", user.uid), {
       fullName,
       profilePic: url,
       email,
-      age
+      age,
     });
     toast.success("User Created");
- 
-  }catch(e){
+  } catch (e) {
     const errorMessage = e.message;
-    toast.error(e.message)
-  }
+    toast.error(e.message);
+  }
 }
 
 export async function login(userInfo) {
@@ -153,17 +164,23 @@ export async function getUser(id) {
     // docSnap.data() will be undefined in this case
     // console.log("No such document!");
   }
-  
 }
 
-// export async function updataUser(id, data) {
-//   const docRef = doc(db, 'products', );
-//   try {
-//     await updateDoc(frankDocRef, {
-//       "age": 13,
-//       "favorites.color": "Red"
-//   });
-//   } catch (error) {
-
-//   }
-// }
+export async function updataUser(userId, data) {
+  console.log(userId, data);
+  try {
+    const { age, name, image } = data;
+    console.log(age, name, image);
+    const docRef = doc(db, "users", userId);
+    const storageRef = ref(storage, `users/${image.name}`);
+    await uploadBytes(storageRef, image);
+    const url = await getDownloadURL(storageRef);
+    await updateDoc(docRef, {
+      fullName: name,
+      age,
+      profilePic: url,
+    });
+    return true
+  } catch (error) {}
+  return false
+}

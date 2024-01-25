@@ -11,18 +11,17 @@ const Signup = () => {
   const [age, setAge] = useState()
   const [password, setPassword] = useState()
   const [img, setImage] = useState()
-  console.log(img);
   const handleSubmit = async () => {
-
-    const image = img
-    const log = await register({ fullName, email, age, password,image })
+    
+    console.log(img, "page wala");
+    const log = await register({ fullName, email, age, password,img})
     if (log) {
       setTimeout(() => {
 
         navigate('/login')
       }, 3000)
     }
-    // navigate('/login')
+    navigate('/login')
   }
   const [previewImage, setPreviewImage] = useState(null);
     const handleImageChange = (e) => {
@@ -83,18 +82,18 @@ const Signup = () => {
                 <label className='text-white px-4 font-bold'>PASSWORD</label>
                 <input onChange={(e) => setPassword(e.target.value)} type="password" className='px-5 bg-[#ffffff63] outline-none text-white py-2 placeholder:text-white text-[20px] rounded-full' placeholder='Enter Your Password ' />
               </div>
-              {/* <div className="mb-5 flex items-center gap-3 ">
+              <div className="mb-5 flex items-center gap-3 ">
                 <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-[#0067ff] flex items-center justify-center ">
                   <img src={previewImage?previewImage:avatar} className="w-full rounded-full" alt="" />
                 </figure>
                 <div className="relative w-[130px] h-[50px]  ">
-                  <input type="file" onChange={handleImageChange} id="customFile" accept=".jpg, .png" className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer " />
+                  <input type="file"  onChange={handleImageChange} id="customFile" accept=".jpg, .png" className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer " />
                   <label htmlFor="customFile" className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#fff] text-black font-semibold rounded-lg truncate cursor-pointer ">
                     upload Photo
                   </label>
                 </div>
 
-              </div> */}
+              </div>
               <button onClick={handleSubmit} className='bg-[#EF6B48] mt-2 w-1/3 mx-auto text-[18px] rounded-full text-white  py-2'>Sign Up</button>
 
             </div>

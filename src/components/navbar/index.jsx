@@ -88,9 +88,9 @@ const Navbar = () => {
                             {
 
                                 userr ? 
-                                <h2>{userr.fullName}</h2>
-                                // <Link to={"/user/profile/me"}>
-                                //     <img className='w-[40px] rounded-full cursor-pointer' src={userr.profilePic} alt="" /></Link>
+                                // <h2>{userr.fullName}</h2>
+                                <Link to={"/user/profile/me"}>
+                                    <img className='w-[40px] rounded-full cursor-pointer' src={userr.profilePic} alt="" /></Link>
                                      :
                                     <Link to={"/login"} className=' font-bold  pb-2 text-center login'>LOGIN</Link>
 
