@@ -47,6 +47,7 @@ const User = () => {
     const [previewImage, setPreviewImage] = useState(null);
     const [userId, setUserId] = useState();
     console.log(userId);
+    console.log(userId);
 
     const handleImageChange = (e) => {
         setImage(e.target.files[0])
