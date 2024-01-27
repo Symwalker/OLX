@@ -56,9 +56,9 @@ const Categories = () => {
             { name: "Vehicels", img: vehicles },
             { name: "Property For sale", img: propertySale },
             { name: "Property For Rent", img: propertyRent },
-            { name: "Electronics & Home Appliances", img: electronics },
+            { name: "Electronics & Appliances", img: electronics },
             { name: "Bikes", img: bikes },
-            { name: "Business, Industrial & Agriculture", img: business },
+            { name: "Business, & Agriculture", img: business },
             { name: "Services", img: services },
             { name: "Jobs", img: jobs },
             { name: "Animals", img: animal },
@@ -74,9 +74,9 @@ const Categories = () => {
                 <div className="flex flex-wrap gap-14 items-center" >
                 {
                     cate.map((item, i)=>(
-                        <div className=" w-[100px] flex flex-col items-center justify-center">
-                            <img key={i} src={item.img} width={105} height={100} className="" alt="" />
-                            {/* <p className="w-1/2 text-center">{item.name}</p> */}
+                        <div className="w-[100px] h-[120px] flex flex-col gap-2 ">
+                            <img key={i} src={item.img} width={105} height={100}  className="" alt="" />
+                            <p className=" text-center font-bold">{item.name}</p>
                         </div>
 
                             ))

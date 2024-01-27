@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { onAuthStateChanged } from "firebase/auth"
 import toast, { Toaster } from "react-hot-toast"
 import Loader from "../components/loader"
+import { useNavigate } from "react-router-dom"
 const User = () => {
     const [userr, setUser] = useState()
     const [name, setName] = useState()
@@ -31,16 +32,14 @@ const User = () => {
         console.log(age, name, image);
     }
 
-
-    const signOut = async () => {
+const navigate = useNavigate()
+    const loggedOut = async () => {
         const sign = await logout()
-
-        if (sign) {
-            setTimeout(() => {
-
-                navigate('/')
-            }, 1000)
+        console.log(sign);
+        if(sign){
+            navigate('/')
         }
+       
     }
 
   
@@ -90,8 +89,8 @@ const User = () => {
                 <p className="text-[16px] text-center text-gray-500 font-semibold">{userr?.email}</p>
                 <p className="text-[20px] text-center   font-bold"> <span>Age</span> : {userr?.age}</p>
                 <div className="w-[90%] mx-auto mt-32">
-                    <button className=" w-full  bg-[#000] text-white font-medium text-[22px] p-3 rounded-md ">Logout</button>
-                    <button onClick={signOut} className=" w-full  bg-red-600 text-white font-medium text-[22px] p-3 rounded-md mt-2 ">Delete</button>
+                    <button onClick={loggedOut} className=" w-full  bg-[#000] text-white font-medium text-[22px] p-3 rounded-md ">Logout</button>
+                    <button  className=" w-full  bg-red-600 text-white font-medium text-[22px] p-3 rounded-md mt-2 ">Delete</button>
 
                 </div>
             </div>

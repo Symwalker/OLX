@@ -10,7 +10,7 @@ const Card = ({ brand, price, category, id, desc, images, rating, title, thumbna
   return (
     <div key={id} className='w-[332px] h-[390px] border-gray-300 border-[3px] rounded-[4px]' onClick={()=>navigate(`/product/${id}`)}>
       <img src={thumbnail} className="h-[50%] w-full rounded-tr-[3px] rounded-tl-[3px]  object-cover object-top" alt="" />
-      <div className=" px-4 py-4 h-[50%] rounded-[4px]">
+      <div className=" px-4 py-4  w-full border-t-[3px] h-[50%] rounded-[4px]">
         <div className="flex justify-between">
 
           <p className="text-[21px] font-[650]">RS {price}</p>
