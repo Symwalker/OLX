@@ -13,7 +13,7 @@ import "./index.css"
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, getUser } from '../../config/firebase';
-const Navbar = () => {
+const   Navbar = () => {
     const miniNAvbar = ["Mobile Phones", "Cars", "Motorcycles", "Houses", "Video-Audios", "Tablets", "Land Plots"]
     const [userr, setUser] = useState()
     console.log(userr);
