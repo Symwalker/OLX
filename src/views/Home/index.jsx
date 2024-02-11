@@ -3,6 +3,7 @@ import Banner from '../../components/Banner'
 import Categories from '../../components/CategoriesSection'
 import Card from '../../components/Card'
 import { getItems } from '../../config/firebase'
+import { useSelector } from 'react-redux'
 
 const Home = () => {
     const [products, setProducts] = useState([])
@@ -13,6 +14,7 @@ const Home = () => {
     useEffect(() => {
         getAllProducts()
     }, [])
+    const cart = useSelector(state=>console.log(state.cart.cart))
     return (
         <div>
             <Banner />
@@ -22,7 +24,7 @@ const Home = () => {
 
                     {
                         products.map((product) => (
-                            <Card brand={product.brand} category={product.category} thumbnail={product.imageURL} desc={product.description} id={product.id} images={product.images} price={product.price} rating={product.rating}  title={product.title} />
+                            <Card brand={product.brand} wProduct={product} category={product.category} thumbnail={product.imageURL} desc={product.description} id={product.id} images={product.images} price={product.price} rating={product.rating}  title={product.title} />
 
                         ))
                     }
