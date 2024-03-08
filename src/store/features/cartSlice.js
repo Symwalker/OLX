@@ -42,7 +42,6 @@ export const cartSlice = createSlice({
       if (indexToRemove !== -1) {
         state.cart.splice(indexToRemove, 1);
       }
-        state.totalPrice -= +action.payload.price;
     },
   },
 });
