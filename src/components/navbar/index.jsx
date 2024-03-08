@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import olxBlue from "../../assets/olx-blue.png"
-import olxblck from "../../assets/olx-black.png"
+// import olxblck from "../../assets/olx-black.png"
 import sellBtn from "../../assets/sellBtn.png"
 import { IoCarSportOutline } from "react-icons/io5";
 import { BsBuildings } from "react-icons/bs";
@@ -89,7 +89,8 @@ const Navbar = () => {
                     {/* lower navbar start*/}
                     <div className='py-[10px] grid grid-cols-12 justify-center gap-7 items-center'>
                         <div className='col-span-1'>
-                            <Link to={'/'}> <img src={olxblck} width={"61"} height={20} alt="" /></Link>
+                            OLX
+                           {/* <Link to={'/'}> <img src={olxblck} width={"61"} height={20} alt="" /></Link> */}
                         </div>
                         <div className='col-span-3 flex items-center bg-white py-[14px] rounded-[4px]  border-solid border-black border-[2px]'>
                             <div className=' ml-[0.8rem] '>
