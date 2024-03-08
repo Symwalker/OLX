@@ -89,7 +89,7 @@ const Navbar = () => {
                     {/* lower navbar start*/}
                     <div className='py-[10px] grid grid-cols-12 justify-center gap-7 items-center'>
                         <div className='col-span-1'>
-                            OLX
+                            OLX 
                            {/* <Link to={'/'}> <img src={olxblck} width={"61"} height={20} alt="" /></Link> */}
                         </div>
                         <div className='col-span-3 flex items-center bg-white py-[14px] rounded-[4px]  border-solid border-black border-[2px]'>
